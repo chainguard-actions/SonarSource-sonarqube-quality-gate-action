@@ -1,0 +1,66 @@
+name: Test custom metadata file path
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Set up fake curl and custom metadata file
+        run: |
+          # Create metadata file at a custom path
+          mkdir -p /tmp/custom-scan-dir
+          cat > /tmp/custom-scan-dir/report-task.txt <<'EOF'
+          serverUrl=http://localhost:9000
+          ceTaskUrl=http://localhost:9000/api/ce/task?id=AXlCe3gsFwOUsY8YKHTn
+          EOF
+
+          # Create fake curl that returns OK quality gate status
+          mkdir -p /tmp/fake-bin
+          cat > /tmp/fake-bin/curl <<'CURLEOF'
+          #!/bin/bash
+          # Fake curl: honor -o flag for hardened action compatibility
+          out=""
+          prev=""
+          for arg in "$@"; do
+            case "$prev" in
+              -o|--output) out="$arg" ;;
+            esac
+            prev="$arg"
+          done
+
+          url="${@: -1}"
+          if echo "$url" | grep -q "qualitygates/project_status"; then
+            payload='{"projectStatus":{"status":"OK"}}'
+          else
+            payload='{"task":{"analysisId":"AXlCe3jz9LkwR9Gs0pBY","status":"SUCCESS"}}'
+          fi
+
+          if [ -n "$out" ]; then
+            echo "$payload" > "$out"
+          else
+            echo "$payload"
+          fi
+          exit 0
+          CURLEOF
+          chmod +x /tmp/fake-bin/curl
+
+      - id: action
+        uses: .
+        env:
+          SONAR_TOKEN: fake-sonar-token-for-test
+          PATH: /tmp/fake-bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+        with:
+          scanMetadataReportFile: /tmp/custom-scan-dir/report-task.txt
+
+      - name: Assert quality-gate-status is PASSED with custom metadata path
+        env:
+          STATUS: ${{ steps.action.outputs.quality-gate-status }}
+        run: |
+          echo "quality-gate-status: $STATUS"
+          if [ "$STATUS" != "PASSED" ]; then
+            echo "FAIL: expected quality-gate-status to be 'PASSED' with custom metadata path, got '$STATUS'"
+            exit 1
+          fi
+          echo "PASS: action correctly used custom metadata file path and returned PASSED"
