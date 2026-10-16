@@ -1,0 +1,1 @@
+# SonarSource-sonarqube-quality-gate-action
