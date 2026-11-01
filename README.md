@@ -7,10 +7,10 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 ## Versions
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v1.1.0 | [`v1.1.0`](https://github.com/chainguard-actions/SonarSource-sonarqube-quality-gate-action/tree/v1.1.0) | [`d304d05`](https://github.com/SonarSource/sonarqube-quality-gate-action/commit/d304d050d930b02a896b0f85935344f023928496) |
-| v1.2.1 | [`v1.2.1`](https://github.com/chainguard-actions/SonarSource-sonarqube-quality-gate-action/tree/v1.2.1) | [`7a5fffe`](https://github.com/SonarSource/sonarqube-quality-gate-action/commit/7a5fffe8e523c40e0c740b6bc2712ab503e52efa) |
+| Version | Tag | Upstream commit | Hardening report |
+|---------|-----|-----------------|------------------|
+| v1.1.0 | [`v1.1.0`](https://github.com/chainguard-actions/SonarSource-sonarqube-quality-gate-action/tree/v1.1.0) | [`d304d05`](https://github.com/SonarSource/sonarqube-quality-gate-action/commit/d304d050d930b02a896b0f85935344f023928496) | [`HARDENING.md`](https://github.com/chainguard-actions/SonarSource-sonarqube-quality-gate-action/blob/v1.1.0/HARDENING.md) |
+| v1.2.1 | [`v1.2.1`](https://github.com/chainguard-actions/SonarSource-sonarqube-quality-gate-action/tree/v1.2.1) | [`7a5fffe`](https://github.com/SonarSource/sonarqube-quality-gate-action/commit/7a5fffe8e523c40e0c740b6bc2712ab503e52efa) | [`HARDENING.md`](https://github.com/chainguard-actions/SonarSource-sonarqube-quality-gate-action/blob/v1.2.1/HARDENING.md) |
 
 ## Privacy
 
