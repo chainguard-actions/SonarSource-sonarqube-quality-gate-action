@@ -29,7 +29,7 @@ runs:
       env:
         SCAN_METADATA_REPORT_FILE: ${{ inputs.scanMetadataReportFile }}
         POLLING_TIMEOUT_SEC: ${{ inputs.pollingTimeoutSec }}
-      run: $GITHUB_ACTION_PATH/script/check-quality-gate.sh "$SCAN_METADATA_REPORT_FILE" "$POLLING_TIMEOUT_SEC"
+      run: '"$GITHUB_ACTION_PATH/script/check-quality-gate.sh" "$SCAN_METADATA_REPORT_FILE" "$POLLING_TIMEOUT_SEC"'
       shell: bash
 inputs:
   scanMetadataReportFile:
