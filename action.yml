@@ -27,7 +27,7 @@ runs:
     - id: quality-gate-check
       env:
         SCAN_METADATA_REPORT_FILE: ${{ inputs.scanMetadataReportFile }}
-      run: $GITHUB_ACTION_PATH/script/check-quality-gate.sh "$SCAN_METADATA_REPORT_FILE"
+      run: '"$GITHUB_ACTION_PATH/script/check-quality-gate.sh" "$SCAN_METADATA_REPORT_FILE"'
       shell: bash
 inputs:
   scanMetadataReportFile:
